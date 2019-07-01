@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_options">
+        <item>Categories</item>
+        <item>Culinary</item>
+        <item>Music</item>
+        <item>Literature</item>
+        <item>Design</item>
+        <item>Handicrafts</item>
+        <item>Photography</item>
+        <item>Drawing</item>
+        <item>Drama</item>
+        <item>Miscellanous</item>
+    </string-array>
+</resources>

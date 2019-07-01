@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "54246400263",
+    "firebase_url": "https://creatives-4ebde.firebaseio.com",
+    "project_id": "creatives-4ebde",
+    "storage_bucket": "creatives-4ebde.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54246400263:android:ffb4e483f62c7586",
+        "android_client_info": {
+          "package_name": "com.avalonglobalresearch.creatives"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54246400263-1ihji1pniogjhbc9fj2t67fir8b0rgpq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZRtQuBsVwfP4yKkR8eENsFV4GpwUprws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54246400263-1ihji1pniogjhbc9fj2t67fir8b0rgpq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
