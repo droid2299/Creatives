@@ -98,7 +98,7 @@ public class SignIn extends AppCompatActivity {
                                     editor.putBoolean("hasLoggedIn", true);
                                     editor.commit();
                                     SplashActivity.hasSignedIn = true;
-                                    Intent intent = new Intent(SignIn.this, MainActivity.class);
+                                    Intent intent = new Intent(SignIn.this, MainFrame.class);
                                     startActivity(intent);
                                     SignIn.this.finish();
 

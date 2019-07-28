@@ -1,97 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
 
-    tools:context=".Categories">
+tools:context=".Categories">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout3"
-        android:layout_width="413dp"
-        android:layout_height="137dp"
-        android:background="@drawable/halfcircle"
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/constraintLayout3"
+    android:layout_width="413dp"
+    android:layout_height="137dp"
+    android:background="@drawable/halfcircle"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.0">
+
+    <TextView
+        android:id="@+id/discover"
+        android:layout_width="303dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:text="@string/discover"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textIsSelectable="true"
+        android:textSize="90sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="1.0" />
+</android.support.constraint.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/discover"
-            android:layout_width="303dp"
-            android:layout_height="108dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="cursive"
-            android:gravity="center"
-            android:text="@string/discover"
-            android:textAllCaps="true"
-            android:textColor="#FFFFFF"
-            android:textIsSelectable="true"
-            android:textSize="90sp"
-            android:textStyle="bold"
+<android.support.v7.widget.CardView
+    android:id="@+id/cardView3"
+    android:layout_width="407dp"
+    android:layout_height="37dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="20dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+    app:layout_constraintVertical_bias="0.0">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="421dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/grid"
+            android:layout_width="66dp"
+            android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:srcCompat="@drawable/grid" />
+
+        <ImageView
+            android:id="@+id/linear"
+            android:layout_width="65dp"
+            android:layout_height="39dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linear" />
+
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView3"
-        android:layout_width="407dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="8dp"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
-        app:layout_constraintVertical_bias="0.0">
+</android.support.v7.widget.CardView>
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="421dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/grid"
-                android:layout_width="66dp"
-                android:layout_height="40dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.15"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/grid" />
-
-            <ImageView
-                android:id="@+id/linear"
-                android:layout_width="65dp"
-                android:layout_height="39dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.85"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/linear" />
-
-        </android.support.constraint.ConstraintLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <FrameLayout
-        android:id="@+id/frame"
-        android:name="com.bumptech.glide.manager.SupportRequestManagerFragment"
-        android:layout_width="412dp"
-        android:layout_height="555dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView3"
-        app:layout_constraintVertical_bias="0.0" />
+<FrameLayout
+    android:id="@+id/frame"
+    android:name="com.bumptech.glide.manager.SupportRequestManagerFragment"
+    android:layout_width="412dp"
+    android:layout_height="555dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/cardView3"
+    app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

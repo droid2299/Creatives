@@ -29,8 +29,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -48,13 +53,15 @@ public class ImageSelect extends AppCompatActivity {
     Button uploadButton;
     Bitmap bitmap , bitmap2;
     EditText caption;
-    String photoPath = Environment.getExternalStorageDirectory() + "/photo.jpg" , downloadUrl;
+    FirebaseAuth auth;
+    String photoPath = Environment.getExternalStorageDirectory() + "/photo.jpg" , downloadUrl , imageUrl , name2 , bio2 , uid;
     String[] country = { "India", "USA", "China", "Japan", "Other"};
-    public static final String Database_Path = "All_Image_Uploads_Database", Storage_Path = "All_Image_Uploads/";
+    public static  String Database_Path = "All_Image_Uploads_Database", Storage_Path = "All_Uploads/";
+    String spinnerResult;
     private SlidrInterface slidr;
     public static final String KEY_EXTRA = "com.example.yourapp.KEY_BOOK";
-    StorageReference storageReference;
-    DatabaseReference databaseReference;
+    StorageReference storageReference , storageRef;
+    DatabaseReference databaseReference , databaseReference2 , databaseReference4 , databaseReference3;
     int Image_Request_Code = 7;
     Uri imageUri , FilePathUri;
     ProgressDialog progressDialog ;
@@ -64,12 +71,12 @@ public class ImageSelect extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_select);
 
-        // Assign FirebaseStorage instance to storageReference.
-        storageReference = FirebaseStorage.getInstance().getReference(Storage_Path);
+
 
         // Assign FirebaseDatabase instance with root database name.
         databaseReference = FirebaseDatabase.getInstance().getReference(Storage_Path);
-
+        databaseReference2 = FirebaseDatabase.getInstance().getReference();
+        databaseReference4 = FirebaseDatabase.getInstance().getReference();
         // Assigning Id to ProgressDialog.
         progressDialog = new ProgressDialog(ImageSelect.this);
 
@@ -78,6 +85,9 @@ public class ImageSelect extends AppCompatActivity {
         uploadButton.setEnabled(false);
         caption = (EditText) findViewById(R.id.caption);
         slidr = Slidr.attach(this);
+        auth = FirebaseAuth.getInstance();
+        databaseReference3 = FirebaseDatabase.getInstance().getReference();
+        final FirebaseUser user = auth.getCurrentUser();
         final Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
         if(CameraActivity.i == "1"  )
@@ -107,19 +117,52 @@ public class ImageSelect extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //stuff here to handle item selection
-                String spinnerResult = spinner.getSelectedItem().toString().trim();
+                spinnerResult = spinner.getSelectedItem().toString().trim();
                 Log.d("TAG" , "SPINNERRESULT   = "+spinnerResult);
-                if(spinnerResult != "Categories"){
+                if(!spinnerResult.equals("Categories")){
                     uploadButton.setEnabled(true);
+                    Storage_Path += spinnerResult;
+
+                }
+                else{
+                    uploadButton.setEnabled(false);
                     Toast.makeText(getApplicationContext() , "Please select a valid Category" , Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                uploadButton.setEnabled(false);
                 Log.i("GTOUTOUT", "Nothing Selected");
             }
+        });
+
+        databaseReference3.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot){
+                name2 = (String) dataSnapshot.child("name").getValue();
+                bio2 = (String) dataSnapshot.child("bio").getValue();
+
+                //imageUri = (URL) dataSnapshot.child("profilePic").getValue();
+                String gender = (String) dataSnapshot.child("gender").getValue();
+                String email = (String) dataSnapshot.child("email").getValue();
+
+                Log.d("TAG", "Name: " +name2);
+                Log.d("TAG", "Email: " +email);
+                Log.d("TAG", "Gender: " +gender);
+
+                uid = user.getUid();
+                Log.d("TAG" , "UID = " +uid);
+
+                imageUrl = (String) dataSnapshot.child("profilePic").getValue();
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+
         });
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +218,11 @@ public class ImageSelect extends AppCompatActivity {
     // Creating UploadImageFileToFirebaseStorage method to upload image on storage.
     public void UploadImageFileToFirebaseStorage() {
 
+        //storageRef = FirebaseStorage.getInstance().getReference(Storage_Path);
+        auth = FirebaseAuth.getInstance();
+        final FirebaseUser user2 = auth.getCurrentUser();
+        // Assign FirebaseStorage instance to storageReference.
+        storageReference = FirebaseStorage.getInstance().getReference(Storage_Path);
         // Checking whether FilePathUri Is empty or not.
         if (imageUri != null) {
 
@@ -205,15 +253,16 @@ public class ImageSelect extends AppCompatActivity {
                                     String TempImageName = caption.getText().toString().trim();
 
                                     @SuppressWarnings("VisibleForTests")
-                                    ImageUploadInfo imageUploadInfo = new ImageUploadInfo(TempImageName, downloadUrl);
+                                    ImageUploadInfo imageUploadInfo = new ImageUploadInfo(TempImageName, downloadUrl , name2 , imageUrl , uid);
 
 
                                     // Getting image upload ID.
                                     String ImageUploadId = databaseReference.push().getKey();
 
                                     // Adding image upload id s child element into databaseReference.
-                                    databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
-
+                                    databaseReference.child(spinnerResult).child("/Images").child(ImageUploadId).setValue(imageUploadInfo);
+                                    databaseReference2.child("/Images").child(ImageUploadId).setValue(imageUploadInfo);
+                                    databaseReference4.child("users").child(user2.getUid()).child("/Images").child(ImageUploadId).setValue(imageUploadInfo);
                                 }
                             });
 
@@ -224,7 +273,7 @@ public class ImageSelect extends AppCompatActivity {
 
                             // Showing toast message after done uploading.
                             Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-
+                            Storage_Path = "All_Uploads/";
 
 
                         }

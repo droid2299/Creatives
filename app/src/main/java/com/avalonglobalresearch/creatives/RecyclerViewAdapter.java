@@ -1,6 +1,7 @@
 package com.avalonglobalresearch.creatives;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by AndroidJSon.com on 6/18/2017.
@@ -18,6 +23,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     Context context;
     List<ImageUploadInfo> MainImageUploadInfoList;
+    String uidOfUploader;
 
     public RecyclerViewAdapter(Context context, List<ImageUploadInfo> TempList) {
 
@@ -25,6 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         this.context = context;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -37,13 +44,33 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         ImageUploadInfo UploadInfo = MainImageUploadInfoList.get(position);
 
         holder.imageNameTextView.setText(UploadInfo.getImageName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context , ProfileActivity.class);
+                intent.putExtra("UID" , uidOfUploader);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.imageNameTextView.setText(UploadInfo.getImageName());
+        holder.username.setText(UploadInfo.getUsername());
+        GlideApp.with(context).load(UploadInfo.getProfile()).into(holder.profilepic);
+        uidOfUploader = UploadInfo.getUid();
 
         //Loading image from Glide library.
-        GlideApp.with(context).load(UploadInfo.getImageURL()).into(holder.imageView);
+        Glide.with(context).load(UploadInfo.getImageURL()).into(holder.imageView);
+
+        holder.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.like.setImageResource(R.drawable.likesel);
+            }
+        });
     }
 
     @Override
@@ -54,15 +81,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView imageView;
-        public TextView imageNameTextView;
+        public ImageView imageView , like;
+        public TextView imageNameTextView , username;
+        public CircleImageView profilepic;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
-
+            like = (ImageView) itemView.findViewById(R.id.like);
             imageNameTextView = (TextView) itemView.findViewById(R.id.ImageNameTextView);
+            username = (TextView) itemView.findViewById(R.id.username);
+            profilepic  = (CircleImageView) itemView.findViewById(R.id.profilepic);
         }
     }
 }

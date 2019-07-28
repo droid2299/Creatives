@@ -15,7 +15,7 @@ import com.r0adkll.slidr.model.SlidrInterface;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button logout , categories , camera;
+    Button logout , categories , camera , profile , uploadType , home;
     FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private FirebaseDatabase mFirebaseInstance;
@@ -27,9 +27,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        logout = (Button) findViewById(R.id.logout);
+        logout = (Button) findViewById(R.id.logout2);
         categories = (Button) findViewById(R.id.categories);
         camera = (Button) findViewById(R.id.camera);
+        profile = (Button) findViewById(R.id.profile);
+        uploadType = (Button) findViewById(R.id.uploadtype);
+        home = (Button) findViewById(R.id.home);
 
         slidr = Slidr.attach(this);
 
@@ -37,6 +40,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this , Categories.class);
+                startActivity(intent);
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this , MainFrame.class);
+                startActivity(intent);
+            }
+        });
+
+        uploadType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this , UploadType.class);
                 startActivity(intent);
             }
         });
@@ -49,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this , ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.putBoolean("hasLoggedIn", false);
                 editor.commit();
                 boolean hasLoggedIn = settings.getBoolean("hasLoggedIn", false);
-                auth.signOut();
+                //auth.signOut();
                 Intent intent = new Intent(MainActivity.this, SignIn.class);
                 startActivity(intent);
 

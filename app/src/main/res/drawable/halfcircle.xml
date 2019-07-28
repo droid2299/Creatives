@@ -4,7 +4,7 @@
         <shape android:shape="rectangle" />
     </item>
     <item
-        android:bottom="05dp"
+        android:bottom="2dp"
         android:left="-50dp"
         android:right="-50dp"
         android:top="-60dp">

@@ -17,6 +17,8 @@ public class GridFragment extends Fragment {
     View view;
     private SlidrInterface slidr;
 
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_grid, container, false);
@@ -30,6 +32,7 @@ public class GridFragment extends Fragment {
         design = (CardView) view.findViewById(R.id.design);
         handicrafts = (CardView) view.findViewById(R.id.handicrafts);
         drawing = (CardView) view.findViewById(R.id.drawing);
+        design = (CardView) view.findViewById(R.id.design);
 
         slidr = (SlidrInterface) Slidr.attach(getActivity());
 
@@ -86,6 +89,14 @@ public class GridFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity() , Drawing.class);
+                startActivity(intent);
+            }
+        });
+
+        design.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity() , Design.class);
                 startActivity(intent);
             }
         });

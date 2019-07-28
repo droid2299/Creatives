@@ -5,8 +5,8 @@ android {
     defaultConfig {
         applicationId "com.avalonglobalresearch.creatives"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
+        targetSdkVersion 26
+        versionCode 2
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -16,6 +16,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+
+        checkReleaseBuilds false
+
+    }
 }
 
 dependencies {
@@ -23,7 +29,10 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:design:28.0.0'
     testImplementation 'junit:junit:4.12'
+    //api 'com.github.tcking:giraffeplayer2:0.1.25-lazyLoad'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
@@ -47,20 +56,43 @@ dependencies {
     //Slidr Library
     implementation 'com.r0adkll:slidableactivity:2.0.6'
 
+    //Exo player
+    // exo player
+    implementation 'com.google.android.exoplayer:exoplayer:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-core:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:r2.4.0'
+
     // dexter runtime permissions
     implementation 'com.karumi:dexter:4.2.0'
+
+    //Video Library
+    api 'com.github.tcking:giraffeplayer2:0.1.25-full'
+    api 'com.github.tcking:ijkplayer-arm64:0.8.8-full' //support arm64
+    api 'com.github.tcking:ijkplayer-armv5:0.8.8-full' //support armv5
+    api 'com.github.tcking:ijkplayer-x86:0.8.8-full' //support x86
+    api 'com.github.tcking:ijkplayer-x86_64:0.8.8-full' //support x86_64
 
     //CameraKit
     implementation 'com.camerakit:camerakit:1.0.0-beta3.11'
     implementation 'com.camerakit:jpegkit:0.1.0'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0'
+    implementation 'com.wonderkiln:camerakit:0.13.2'
 
     //Swipe Cards
     implementation 'com.lorentzos.swipecards:library:1.0.9'
 
     //Picasso Library
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //OnBoarding Library
+    //implementation 'com.github.msayan:tutorial-view:v1.0.9'
+    //implementation 'com.github.AppIntro:AppIntro:5.1.0'
+    //implementation 'com.github.AppIntro:AppIntro:4.2.3'
+    implementation 'com.ramotion.paperonboarding:paper-onboarding:1.1.0'
 
 
 }

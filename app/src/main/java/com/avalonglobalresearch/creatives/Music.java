@@ -1,39 +1,24 @@
 package com.avalonglobalresearch.creatives;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Music extends AppCompatActivity {
 
+    ImageView imageList , videoList ;
+    TextView textList;
+
+
     private SlidrInterface slidr;
-
-    // Creating DatabaseReference.
-    DatabaseReference databaseReference;
-
-    // Creating RecyclerView.
-    RecyclerView recyclerView;
-
-    // Creating RecyclerView.Adapter.
-    RecyclerView.Adapter adapter ;
-
-    // Creating Progress dialog
-    ProgressDialog progressDialog;
-
-    // Creating List of ImageUploadInfo class.
-    List<ImageUploadInfo> list = new ArrayList<>();
 
 
     @Override
@@ -41,57 +26,46 @@ public class Music extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
 
-        // Assign id to RecyclerView.
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        imageList = (ImageView) findViewById(R.id.imageList);
+        videoList = (ImageView) findViewById(R.id.videoList);
+        textList = (TextView) findViewById(R.id.textList);
+        slidr = Slidr.attach(this);
 
-        // Setting RecyclerView size true.
-        recyclerView.setHasFixedSize(true);
+        loadFragment(new MusicImagesFragment());
 
-        // Setting RecyclerView layout as LinearLayout.
-        recyclerView.setLayoutManager(new LinearLayoutManager(Music.this));
-
-        // Assign activity this to progress dialog.
-        progressDialog = new ProgressDialog(Music.this);
-
-        // Setting up message in Progress dialog.
-        progressDialog.setMessage("Loading Images From Firebase.");
-
-        // Showing progress dialog.
-        progressDialog.show();
-
-        // Setting up Firebase image upload folder path in databaseReference.
-        // The path is already defined in MainActivity.
-        databaseReference = FirebaseDatabase.getInstance().getReference(ImageSelect.Storage_Path);
-
-        // Adding Add Value Event Listener to databaseReference.
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        imageList.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-
-                    ImageUploadInfo imageUploadInfo = postSnapshot.getValue(ImageUploadInfo.class);
-
-                    list.add(imageUploadInfo);
-                }
-
-                adapter = new RecyclerViewAdapter(getApplicationContext(), list);
-
-                recyclerView.setAdapter(adapter);
-
-                // Hiding the progress dialog.
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-                // Hiding the progress dialog.
-                progressDialog.dismiss();
-
+            public void onClick(View v) {
+                loadFragment(new MusicImagesFragment());
             }
         });
 
+        videoList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new MusicVideosFragment());
+            }
+        });
+
+        textList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new MusicTextsFragment());
+            }
+        });
+
+    }
+
+    public boolean loadFragment(Fragment fragment){
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frame, fragment);
+            fragmentTransaction.commit();
+            return true;
+        }
+        return  false;
     }
 }
 
